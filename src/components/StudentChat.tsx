@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Send, User, MessageCircle, Loader2 } from 'lucide-react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 interface StudentChatProps {
   ctx: AlgorithmContext;
@@ -104,7 +106,16 @@ export const StudentChat: React.FC<StudentChatProps> = ({ ctx, debate, verdict }
                   ? 'bg-ink text-bg rounded-2xl rounded-br-[4px]' 
                   : 'bg-gray-100 text-gray-800 rounded-2xl rounded-bl-[4px] markdown-body'
               }`}>
-                {m.role === 'user' ? m.content : <Markdown remarkPlugins={[remarkGfm]}>{m.content}</Markdown>}
+                {m.role === 'user' ? (
+                  m.content
+                ) : (
+                  <Markdown
+                    remarkPlugins={[remarkGfm, remarkMath]}
+                    rehypePlugins={[rehypeKatex]}
+                  >
+                    {m.content}
+                  </Markdown>
+                )}
               </div>
             </motion.div>
           ))}

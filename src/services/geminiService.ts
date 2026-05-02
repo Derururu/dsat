@@ -1,7 +1,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { AlgorithmContext, DebateSession, Verdict, QuizQuestion } from "../types";
+import { AlgorithmContext, ChatMessage, DebateSession, Verdict, QuizQuestion } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+const ai = new GoogleGenAI({ apiKey });
 
 /**
  * Reader Agent: Extracts algorithm from image or text.

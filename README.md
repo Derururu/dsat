@@ -19,3 +19,10 @@ An AI-powered study companion that helps you master Data Structures and Algorith
 ## Test it out!
 https://ai.studio/apps/614a0bc1-4e21-4bc7-bee8-7bc5cd386c14
 
+## Run Locally
+
+1. Install dependencies:
+   `npm install`
+2. Set `VITE_GEMINI_API_KEY` in `.env.local` to your Gemini API key
+3. Run the app:
+   `npm run dev`
