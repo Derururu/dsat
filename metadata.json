@@ -1,0 +1,6 @@
+{
+  "name": "DSA Multi-Agent Study Tutor",
+  "description": "An AI-powered tutor that extracts algorithms from notes, orchestrates debates between reasoning agents, and provides adaptive quizzes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
