@@ -65,16 +65,30 @@ export default function App() {
   }, [history]);
 
   const addToHistory = (score: number) => {
-    if (!ctx || !verdict) return;
+    if (!ctx || !verdict || !debate) return;
     const newItem: HistoryItem = {
       id: Math.random().toString(36).substr(2, 9),
       name: ctx.name,
       timeComplexity: verdict.time_complexity,
       score,
       totalQuestions: questions.length,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      ctx,
+      debate,
+      verdict,
+      questions
     };
     setHistory(prev => [newItem, ...prev].slice(0, 20)); // Keep last 20
+  };
+
+  const loadHistoryItem = (item: HistoryItem) => {
+    setCtx(item.ctx);
+    setDebate(item.debate);
+    setVerdict(item.verdict);
+    setQuestions(item.questions);
+    setQuizScore(item.score);
+    setState(SessionState.SUMMARIZED);
+    setError(null);
   };
 
   const reset = () => {
@@ -163,9 +177,7 @@ export default function App() {
         isOpen={isHistoryOpen}
         onClose={() => setIsHistoryOpen(false)}
         onClear={clearHistory}
-        onSelect={(item) => {
-           alert(`Analysis of ${item.name} viewed. (Detailed restoration coming in next update)`);
-        }}
+        onSelect={loadHistoryItem}
       />
 
       {/* Header */}
@@ -231,8 +243,8 @@ export default function App() {
                     transition={{ delay: 0.2 }}
                     className="text-7xl font-bold tracking-tight leading-[0.9] text-ink"
                   >
-                    Hello, Scholar. <br/>
-                    <span className="opacity-20 italic font-serif">Study Companion.</span>
+                    Hello Scholar, <br/>
+                    <span className="opacity-20 italic font-serif text-5xl">I'm your DSA Tutor.</span>
                   </motion.h2 >
                   
                   <motion.p 
@@ -241,7 +253,7 @@ export default function App() {
                     transition={{ delay: 0.4 }}
                     className="text-lg font-medium text-gray-500 max-w-lg leading-relaxed"
                   >
-                    Deepen your understanding of Data Structures & Algorithms through multi-agent reasoning and interactive analysis.
+                    I help you master complex algorithms by analyzing your notes and facilitating deep analytical debates between specialist AI agents.
                   </motion.p>
                 </div>
 

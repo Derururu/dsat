@@ -64,6 +64,10 @@ export interface HistoryItem {
   score: number;
   totalQuestions: number;
   timestamp: number;
+  ctx: AlgorithmContext;
+  debate: DebateSession;
+  verdict: Verdict;
+  questions: QuizQuestion[];
 }
 
 export enum SessionState {
