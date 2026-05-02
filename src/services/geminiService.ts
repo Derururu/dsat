@@ -19,7 +19,7 @@ export async function extractAlgorithm(input: { b64?: string, text?: string }): 
       "variables": ["string"],
       "confidence": number (0.0 to 1.0)
     }
-    Be precise. If it's an image, transcribe the pseudocode as accurately as possible.
+    Be precise. IMPORTANT: For the "pseudocode" field, format the code perfectly with standard, consistent indentation. Do not abbreviate. Do not use markdown wrappers around the code.
   `;
 
   const parts: any[] = [{ text: prompt }];
