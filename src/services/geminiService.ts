@@ -7,7 +7,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
  * Reader Agent: Extracts algorithm from image or text.
  */
 export async function extractAlgorithm(input: { b64?: string, text?: string }): Promise<AlgorithmContext> {
-  const model = "gemini-2.0-flash";
+  const model = "gemini-3.1-pro-preview";
   
   const prompt = `
     Extract the algorithm details from the provided input. 
@@ -62,7 +62,7 @@ export async function extractAlgorithm(input: { b64?: string, text?: string }): 
  * Conduct Interactive Debate: Generates a conversation between Critic and Textbook agents.
  */
 export async function conductDebate(ctx: AlgorithmContext): Promise<DebateSession> {
-  const model = "gemini-2.0-flash";
+  const model = "gemini-3.1-pro-preview";
 
   const prompt = `
     Conduct an interactive debate about this algorithm:
@@ -140,7 +140,7 @@ export async function conductDebate(ctx: AlgorithmContext): Promise<DebateSessio
  * Judge Agent: Synthesizes the debate based on the full session.
  */
 export async function judgeDebate(ctx: AlgorithmContext, debate: DebateSession): Promise<Verdict> {
-  const model = "gemini-2.0-flash"; 
+  const model = "gemini-3.1-pro-preview"; 
   
   const prompt = `
     You are a Senior CS Professor. Evaluate the debate session about this algorithm:
@@ -185,7 +185,7 @@ export async function judgeDebate(ctx: AlgorithmContext, debate: DebateSession):
  * Quiz Agent: Generates questions.
  */
 export async function generateQuiz(ctx: AlgorithmContext, verdict: Verdict): Promise<QuizQuestion[]> {
-  const model = "gemini-2.0-flash";
+  const model = "gemini-3.1-pro-preview";
   
   const prompt = `
     Generate 3 challenging quiz questions for a student to test their understanding of the following algorithm analysis.
@@ -225,10 +225,51 @@ export async function generateQuiz(ctx: AlgorithmContext, verdict: Verdict): Pro
 }
 
 /**
+ * Student Chat: Allows student to ask questions to the Professor.
+ */
+export async function askProfessor(
+  ctx: AlgorithmContext, 
+  debate: DebateSession, 
+  verdict: Verdict, 
+  chatHistory: ChatMessage[],
+  userQuestion: string
+): Promise<string> {
+  const model = "gemini-3.1-pro-preview";
+  
+  const historyString = chatHistory.map(m => `${m.role === 'user' ? 'Student' : 'Professor'}: ${m.content}`).join('\n');
+
+  const prompt = `
+    You are a Senior CS Professor. You just finished a debate and provided a verdict on the following algorithm:
+    Algorithm: ${ctx.name}
+    Verdict: ${verdict.explanation}
+    
+    Debate Recap:
+    ${debate.exchanges.map(e => `Agent ${e.agent_id}: ${e.content}`).join('\n')}
+    
+    Past conversation with student:
+    ${historyString}
+    
+    Student's new question: ${userQuestion}
+    
+    Answer the student's question clearly, pedagogically, and accurately based on the context. If you don't know, suggest looking it up in a trusted source like CLRS.
+  `;
+
+  const response = await ai.models.generateContent({
+    model,
+    contents: prompt,
+    config: {
+      systemInstruction: "You are a helpful, neutral, and rigorous CS Professor. Your goal is to help the student understand the nuances of the algorithm.",
+    }
+  });
+
+  return response.text;
+}
+
+/**
  * Evaluate Quiz Answer
  */
 export async function evaluateAnswer(question: QuizQuestion, userAnswer: string): Promise<{ isCorrect: boolean, feedback: string }> {
-  const model = "gemini-2.0-flash";
+  const model = "gemini-3.1-pro-preview";
   
   const prompt = `
     Question: ${question.question}

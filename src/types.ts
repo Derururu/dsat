@@ -70,6 +70,12 @@ export interface HistoryItem {
   questions: QuizQuestion[];
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: number;
+}
+
 export enum SessionState {
   IDLE = 'IDLE',
   READING = 'READING',

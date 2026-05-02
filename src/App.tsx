@@ -22,6 +22,7 @@ import { FileUpload } from './components/FileUpload';
 import { AgentDebate } from './components/AgentDebate';
 import { JudgeVerdict } from './components/JudgeVerdict';
 import { Quiz } from './components/Quiz';
+import { StudentChat } from './components/StudentChat';
 import { HistoryBar } from './components/HistoryBar';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -381,6 +382,18 @@ export default function App() {
                     <div className="h-px bg-line flex-grow" />
                   </div>
                   <JudgeVerdict verdict={verdict} />
+                </section>
+              )}
+
+              {/* Chat Consultation */}
+              {ctx && debate && verdict && (
+                <section className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="h-px bg-line flex-grow" />
+                    <h2 className="label-sm px-4">Deep Dive Consultation</h2>
+                    <div className="h-px bg-line flex-grow" />
+                  </div>
+                  <StudentChat ctx={ctx} debate={debate} verdict={verdict} />
                 </section>
               )}
 
