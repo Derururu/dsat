@@ -234,7 +234,7 @@ export async function askProfessor(
   chatHistory: ChatMessage[],
   userQuestion: string
 ): Promise<string> {
-  const model = "gemini-3.1-pro-preview";
+  const model = "gemini-3-flash-preview";
   
   const historyString = chatHistory.map(m => `${m.role === 'user' ? 'Student' : 'Professor'}: ${m.content}`).join('\n');
 
@@ -258,7 +258,7 @@ export async function askProfessor(
     model,
     contents: prompt,
     config: {
-      systemInstruction: "You are a helpful, neutral, and rigorous CS Professor. Your goal is to help the student understand the nuances of the algorithm.",
+      systemInstruction: "You are a helpful, neutral, and rigorous CS Professor. Your goal is to help the student understand the nuances of the algorithm. IMPORTANT: Keep your responses concise to reply quickly. DO NOT use any LaTeX formatting ($ or $$) for math. Write mathematical notation in plain text (e.g., O(N^2)). Use standard markdown for formatting, including triple backticks for any code or pseudocode with consistent indentation.",
     }
   });
 

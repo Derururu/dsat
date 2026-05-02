@@ -1,20 +1,17 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# DSA Tutor
 
-# Run and deploy your AI Studio app
+An AI-powered study companion that helps you master Data Structures and Algorithms through multi-agent reasoning and interactive analysis.
 
-This contains everything you need to run your app locally.
+## Core Features
 
-View your app in AI Studio: https://ai.studio/apps/614a0bc1-4e21-4bc7-bee8-7bc5cd386c14
+- **Algorithmic Extraction:** Upload notes or images to automatically structure pseudocode and context.
+- **Multi-Agent Debate:** Watch specialist AI agents (Critic vs. Textbook) debate time/space complexity, edge cases, and optimizations.
+- **Synthesis:** Receive a consolidated verdict and summary of the algorithm's nuances from a virtual Judge.
+- **Interactive Consultation:** Chat with a virtual CS Professor to ask follow-up questions and explore concepts deeply.
+- **Active Recall:** Test your understanding with dynamically generated quizzes.
+- **Session History:** Automatically save and revisit your previous learning sessions.
 
-## Run Locally
+## Tech Stack
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- Frontend: React 18, Vite, Tailwind CSS, Motion
+- AI: Google Gemini API (multiple models via `@google/genai`)
