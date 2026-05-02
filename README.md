@@ -15,3 +15,7 @@ An AI-powered study companion that helps you master Data Structures and Algorith
 
 - Frontend: React 18, Vite, Tailwind CSS, Motion
 - AI: Google Gemini API (multiple models via `@google/genai`)
+
+## Test it out!
+https://ai.studio/apps/614a0bc1-4e21-4bc7-bee8-7bc5cd386c14
+
